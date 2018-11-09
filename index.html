@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>R</title>
+
+</head>
+<body>
+Hodie est <strong><span id="day"></span> <span id="year"></span> AUC</strong>
+<script>
+//stackoverflow https://stackoverflow.com/questions/9083037
+function roman_numeral (num) {
+	var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
+	var roman = '';
+	var i;
+	for ( i in lookup ) {
+		while ( num >= lookup[i] ) {
+		roman += i;
+		num -= lookup[i];
+		}
+	}
+	return roman;
+}
+var len = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var menses = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var now = new Date ();
+var ides = 13;
+var mon = now.getMonth ();
+if (mon == 2 || mon == 4 || mon == 6 || mon == 9) ides = 15;
+var nones = ides - 8;
+var day = now.getDate (), daystr = '';
+if (day == nones) daystr = 'Non.'; else
+if (day == 1) daystr = 'Kal.'; else
+if (day == ides) daystr = 'Id.'; else
+if (day < nones){
+	var diff = nones - day + 1;
+	if (diff == 2) daystr = 'prid. Non.';
+	else daystr = 'a.d. '+ roman_numeral (diff) + ' Non.';
+}
+else if (day < ides){
+	var diff = ides - day + 1;
+	if (diff == 2) daystr = 'prid. Id.';
+	else daystr = 'a.d. '+ roman_numeral (diff) + ' Id.';
+}
+else {
+	var diff = len[mon] - day + 2;
+	if (diff == 2) daystr = 'prid. Kal.';
+	else daystr = 'a.d. '+ roman_numeral (diff) + ' Kal.';
+	mon = (mon + 1)%12;
+}
+var dayel = document.getElementById ('day');
+dayel.innerHTML = daystr + ' ' + menses[mon];
+var year = now.getFullYear() + 753;
+var yearel = document.getElementById ('year');
+yearel.innerHTML = roman_numeral (year);
+</script>
+</body>
+</html>
