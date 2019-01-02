@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>R</title>
+<title>Calendarium Romanum</title>
 
 </head>
 <body>
-Hodie est <strong><span id="day"></span> <span id="year"></span> AUC</strong>
+Hodie est <strong><span id="day"></span> <span id="month"></span> <span id="year"></span> <span title="Ab Urbe condita">AUC</span></strong>
 <script>
 //stackoverflow https://stackoverflow.com/questions/9083037
 function roman_numeral (num) {
@@ -22,6 +22,9 @@ function roman_numeral (num) {
 }
 var len = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 var menses = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var menses_tooltip = ['Ianuarius', 'Februarius', 'Martius', 'Aprilis', 
+                      'Maius', 'Iunius', 'Iulius', 'Augustus', 
+                      'September', 'October', 'November', 'December']
 var now = new Date ();
 var ides = 13;
 var mon = now.getMonth ();
@@ -48,7 +51,10 @@ else {
 	mon = (mon + 1)%12;
 }
 var dayel = document.getElementById ('day');
-dayel.innerHTML = daystr + ' ' + menses[mon];
+dayel.innerHTML = daystr;
+var monthel = document.getElementById ('month');
+monthel.innerHTML = menses[mon] + '.';
+monthel.setAttribute ("title", menses_tooltip[mon]);
 var year = now.getFullYear() + 753;
 var yearel = document.getElementById ('year');
 yearel.innerHTML = roman_numeral (year);
